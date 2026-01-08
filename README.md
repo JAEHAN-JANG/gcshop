@@ -63,15 +63,12 @@ Node.js(Express) + MySQL + EJS 기반으로 구현한 **쇼핑몰 웹 서비스(
 ---
 
 ## 🖼 Screenshots
-> 아래 파일을 레포에 업로드한 뒤 링크를 연결하세요.  
-> (추천 경로: `/assets/`)
 
-- Guest 화면: `/assets/guest.png`
-- Manager(Admin) 화면: `/assets/manager.png`
-- DB 테이블 구조: `/assets/db-schema.png`
-
-예시:
-```md
+### Guest View
 ![Guest](./assets/guest.png)
+
+### Manager (Admin) View
 ![Manager](./assets/manager.png)
+
+### Database Schema
 ![DB Schema](./assets/db-schema.png)
