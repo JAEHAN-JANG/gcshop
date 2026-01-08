@@ -40,8 +40,6 @@ SSR 환경에서 **역할 분리를 명확히 하기 위해 MVC 스타일로 구
 - **board, boardtype** : 게시판 / 카테고리
 - **code, author, topic, sessions** 등
 
-※ `schedule05` 테이블은 과제 관련 테이블로, 본 프로젝트 기능과 무관하여 제외했습니다.
-
 ---
 
 ## ✨ Key Features
