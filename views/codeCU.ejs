@@ -1,0 +1,62 @@
+<div class="container">
+    <h2><%= code ? '코드 수정' : '코드 입력' %></h2>
+    <form action="<%= code ? '/code/update_process' : '/code/create_process' %>" method="post">
+
+        <% if (!code) { %>
+            
+            <div class="mb-3">
+                <label class="form-label" for="main_id">대분류</label> 
+                <input class="form-control" type="text" name="main_id" style="width:300px;" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="main_name">대분류명</label> 
+                <input class="form-control" type="text" name="main_name" value="<%= code ? code.main_name : '' %>" style="width:300px;" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="sub_id">소분류</label> 
+                <input class="form-control" type="text" name="sub_id" style="width:300px;" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="sub_name">소분류명</label> 
+                <input class="form-control" type="text" name="sub_name" value="<%= code ? code.sub_name : '' %>" style="width:300px;" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="start">시작일</label> 
+                <input class="form-control" type="text" name="start" value="<%= code ? code.start : '' %>" style="width:300px;" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="end">종료일</label> 
+                <input class="form-control" type="text" name="end" value="<%= code ? code.end : '' %>" style="width:300px;" />
+            </div>
+
+        <% } else { %>
+            
+            <input type="hidden" name="main_id" value="<%= code.main_id %>" />
+            <input type="hidden" name="sub_id" value="<%= code.sub_id %>" />
+            <input type="hidden" name="start" value="<%= code.start %>" />
+
+            <div class="mb-3">
+                <label class="form-label" for="main_name">대분류명</label> 
+                <input class="form-control" type="text" name="main_name" value="<%= code.main_name %>" style="width:300px;" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="sub_name">소분류명</label> 
+                <input class="form-control" type="text" name="sub_name" value="<%= code.sub_name %>" style="width:300px;" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="start">시작일</label> 
+                <input class="form-control" type="text" value="<%= code.start %>" disabled style="width:300px;" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="end">종료일</label> 
+                <input class="form-control" type="text" name="end" value="<%= code.end %>" style="width:300px;" />
+            </div>
+        <% } %>
+        
+        <button class="btn btn-outline-primary btn-sm" type="submit"><%= code ? '수정' : '입력' %></button>
+        <a href="/code/view"><button class="btn btn-outline-primary btn-sm" type="button">코드 목록 돌아가기</button></a>
+    </form>
+</div>

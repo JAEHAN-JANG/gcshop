@@ -1,0 +1,82 @@
+<div class="container">   
+    <h2>
+        <% if (person && person.length > 0) { %>
+            관리자 기능 : 회원 정보 수정
+        <% } else if (isCreate) { %>
+            관리자 기능 : 회원 생성
+        <% } else { %>
+            회원가입
+        <% } %>
+    </h2>
+    
+    <form action="<%= person && person.length > 0 ? '/person/update_process' : (isCreate ? '/person/create_process' : '/auth/register_process') %>" method="post">
+        
+        <% if (person && person.length > 0) { %>
+            <input type="hidden" name="loginid" value="<%= person[0].loginid %>" />
+        <% } else { %>
+            <div class="mb-3">             
+                <label class="form-label" for="loginid">ID</label> 
+                <input class="form-control" type="text" name="loginid" placeholder="아이디를 입력해 주세요" style="width:300px;" required />
+            </div>
+        <% } %>
+        
+        <div class="mb-3">
+            <label class="form-label" for="password">PW</label> 
+            <% if (person && person.length > 0) { %>
+                <input class="form-control" type="text" name="password" value="<%= person[0].password %>" style="width:300px;" required />
+            <% } else { %>
+                <input class="form-control" type="password" name="password" placeholder="패스워드를 입력해 주세요" style="width:300px;" required />
+            <% } %>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="name">이름</label> 
+            <input class="form-control" type="text" name="name" placeholder="이름을 입력해 주세요" value="<%= person && person.length > 0 ? person[0].name : '' %>" style="width:300px;" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="address">주소</label> 
+            <input class="form-control" type="text" name="address" placeholder="주소를 입력해 주세요" value="<%= person && person.length > 0 ? person[0].address : '' %>" style="width:300px;" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="tel">전화번호</label> 
+            <input class="form-control" type="text" name="tel" placeholder="000-0000-0000" value="<%= person && person.length > 0 ? person[0].tel : '' %>" style="width:300px;" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="birth">생일</label> 
+            <input class="form-control" type="text" name="birth" placeholder="YYYYMMDD" value="<%= person && person.length > 0 ? person[0].birth : '' %>" style="width:300px;" required />
+        </div>
+
+        <% if (person && person.length > 0 || isCreate) { %>
+            <div class="mb-3">
+                <label class="form-label" for="class">CLASS</label>
+                <select name="class" id="class" required>
+                    <option value="CEO" <%= person && person.length > 0 && person[0].class === 'CEO' ? 'selected' : '' %>>경영자</option>
+                    <option value="MNG" <%= person && person.length > 0 && person[0].class === 'MNG' ? 'selected' : '' %>>관리자</option>
+                    <option value="CST" <%= person && person.length > 0 && person[0].class === 'CST' ? 'selected' : '' %>>고객</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="grade">GRADE</label>
+                <select name="grade" id="grade" required>
+                    <option value="S" <%= person && person.length > 0 && person[0].grade === 'S' ? 'selected' : '' %>>실버(가장 낮은 등급)</option>
+                    <option value="G" <%= person && person.length > 0 && person[0].grade === 'G' ? 'selected' : '' %>>골드</option>
+                    <option value="D" <%= person && person.length > 0 && person[0].grade === 'D' ? 'selected' : '' %>>다이아몬드(가장 높은 등급)</option>
+                </select>
+            </div>
+        <% } %>
+
+        <button class="btn btn-outline-primary btn-sm" type="submit">
+            <%= person && person.length > 0 ? '수정' : '입력' %>
+        </button>
+
+        <% if (person && person.length > 0 || isCreate) { %>
+            <a href="/person/view">
+                <button class="btn btn-outline-primary btn-sm" type="button">고객 목록 돌아가기</button>
+            </a>
+        <% } %>
+    </form>   
+</div>

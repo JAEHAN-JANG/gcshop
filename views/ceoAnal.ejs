@@ -1,0 +1,53 @@
+<div class="container">	
+	<h2>지역별 고객 분포 </h2>
+
+	<% var i = 0;
+	   while(i < percentage.length) { %>
+		<input type = "hidden" value = "<%=percentage[i].rate%>" class = "data" name = "rate">
+		<input type = "hidden" value = "<%=percentage[i].address%>" class = "address" name = "rate">
+	<% i += 1 } %> 
+	<canvas id="graph" width="500" height="500" style="background-color: aliceblue"></canvas>
+
+	<script>
+		let data = document.getElementsByClassName("data");
+		let address = document.getElementsByClassName("address");
+		let colors = ["blue", "magenta","green", "yellow",  "red", "black", "white"];
+		let canvas = document.getElementById("graph");
+		let context = canvas.getContext("2d");
+
+		for(let i = 0; i < data.length; i++){
+			context.font = "20px malgun gothic";
+			context.fillStyle = colors[i];
+			context.fillText(address[i].value + " | " + data[i].value + "%", 20, 20 + 20 * i);                    
+        }
+
+
+		let angle = 0;
+
+
+		for(let i = 0; i < data.length; i++){
+			context.fillStyle = colors[i];
+			context.beginPath();
+			context.moveTo(250, 250);
+			context.arc(250, 250, 210, angle, angle + (Math.PI * 2 * (parseFloat(data[i].value)/100)));
+			context.lineTo(250, 250);
+			context.fill();
+			
+			angle += Math.PI * 2 * (parseFloat(data[i].value)/100);
+			
+		}	
+	</script>
+
+</div>
+
+<!-- person테이블 사용해서 지역별 고객 분포 표시하기 
+ 
+지역을 구 단위나 동단위로 해도 상관 x 그냥 주소로 groub by 하면됨. 같은 주소를 가진 레코드가 몇개 있는지 
+같은 주소를 가진 사람들의 나이가 몇살인지 등등 같은 주소를 가진 고객들의 분포를 표현
+그 주소를 가지고 있는 수를 전체 수로 나누어서 비율을 구함. sql이랑 ejs 파일에 맞춰서 코드를 짜야함 percentage가 select 문의 결과를 변수로 받아야할 값인듯 script 부분은 
+자바 스크립트로 브라우저 딴에서 처리하는 거고 ejs 파일의 템플릿 부분은 서버 딴에서 처리
+해당 ejs 파일의 실행순서는 먼저 템플릿 언어가 있는 부분이 먼저 렌더링을 해서 순수한 html 코드가 생성되고
+<script>태그는 이미 html태그 헨더링 되지 않음. 브라우저가 읽을 수 있는 자바스크립트 코드
+	이제 전부 순수한 html코드에서 브라우저가 실행. 
+	data, address 는 배열 , 색은 7개만 지정돼있움. 실행을 간단히 하기 위하여 했을 뿐이지. 지역이 7개를 넘어가면
+	오류가 나는 프로그래밍으로 좋은 프로그래밍이 아님. 지역이 몇개안돼서 이렇게 했을 뿐.-->

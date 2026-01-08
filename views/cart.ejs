@@ -1,0 +1,64 @@
+<form action="/purchase/cart/delete" method="POST" id="cartForm">
+    <table class="table table-bordered" style="text-align: left; vertical-align: middle;">
+        <thead>
+            <tr>
+                <th>구매선택</th>
+                <th>상품</th>
+                <th>상품명</th>
+                <th>단가</th>
+                <th>담은날</th>
+                <th>수량</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for (i = 0; i < carts.length; i++) { %>
+            <tr style="text-align: center; vertical-align: middle;">
+                <td><input type="checkbox" name="selectCart" value="<%= carts[i].cart_id %>"></td>
+                <td>
+                    <a href="#" style="text-decoration: none;">
+                        <img src="/<%= carts[i].image %>" style="width:100px; height:100px;">
+                    </a>
+                </td>
+                <td><%= carts[i].name %></td>
+                <td><%= carts[i].price.toLocaleString('ko-KR') %> 원</td>
+                <td><%= new Date(carts[i].date).getFullYear() %>.<%= ('0' + (new Date(carts[i].date).getMonth() + 1)).slice(-2) %>.<%= ('0' + new Date(carts[i].date).getDate()).slice(-2) %> :
+                    <%= ('0' + new Date(carts[i].date).getHours()).slice(-2) %>시 
+                    <%= ('0' + new Date(carts[i].date).getMinutes()).slice(-2) %>분 
+                    <%= ('0' + new Date(carts[i].date).getSeconds()).slice(-2) %>초</td>
+                <td>
+                    <input type="number" name="qty_<%= carts[i].cart_id %>" value="1" min="1" style="width: 200px;" required>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <% if (carts.length == 0) { %>
+        <p>장바구니에 상품이 없으니 상품을 추가해 주십시오.</p>
+    <% } %>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <!-- 결제 버튼: form 데이터가 /purchase/cart/buy 경로로 전송 -->
+        <button class="btn btn-outline-primary btn-sm" type="submit" formaction="/purchase/cart/buy">결제</button>
+        <!-- 삭제 버튼: 삭제 확인 메시지 추가 -->
+        <button class="btn btn-outline-primary btn-sm" type="button" onclick="confirmDeletion()">삭제</button>
+        <!-- 상품 목록으로 돌아가기 -->
+        <a href="/">
+            <button class="btn btn-outline-primary btn-sm" type="button">상품 목록 돌아가기</button>
+        </a>
+    </div>
+</form>
+
+<script>
+    function confirmDeletion() {
+        // 선택된 체크박스가 있는지 확인
+        const checkboxes = document.querySelectorAll('input[name="selectCart"]:checked');
+        if (checkboxes.length === 0) {
+            alert('삭제할 상품을 선택해주세요');
+        } else if (confirm('정말로 삭제하시겠습니까?')) {
+            document.getElementById('cartForm').action = '/purchase/cart/delete';
+            document.getElementById('cartForm').submit();
+        }
+    }
+</script>

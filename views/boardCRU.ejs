@@ -1,0 +1,77 @@
+<div class="container">
+    <!-- 제목 출력 -->
+    <% if (actionType === 'create' || actionType === 'update') { %>
+        <h2><%= actionType === 'create' ? boards[0].title + ' 작성' : boards[0].title + ' 수정' %></h2>
+    <% } %>
+
+    <form action="<%= actionType === 'create' ? '/board/create_process' : '/board/update_process' %>" method="post">
+        <input type="hidden" name="type_id" value="<%= boards[0].type_id %>">
+        <input type="hidden" name="loginid" value="<%= login %>">
+        <input type="hidden" name="pNum" value="<%= pNum %>">
+
+        <% if (actionType === 'update') { %>
+            <input type="hidden" name="board_id" value="<%= board[0].board_id %>">
+        <% } %>
+
+        <!-- 제목 입력 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="id">제목</label> 
+            <input class="form-control" type="text" name="title" style="width:300px;" required
+                   value="<%= actionType === 'create' ? '' : board[0].title %>" 
+                   <%= (cls === 'CEO' || !login || actionType === 'detail') ? 'disabled' : '' %>/>
+        </div>
+
+        <!-- 작성자 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="id">작성자</label> 
+            <input class="form-control" type="text" name="title" value="<%= names[0].name %>" style="width:300px;" disabled />
+        </div>
+
+        <!-- 작성일 필드 (create일 때는 보이지 않음) -->
+        <% if (actionType === 'detail') { %>
+            <div class="mb-3">
+                <label class="form-label" for="id">작성일</label> 
+                <input class="form-control" type="text" value="<%= new Date(board[0].date).getFullYear() %>.<%= ('0' + (new Date(board[0].date).getMonth() + 1)).slice(-2) %>.<%= ('0' + new Date(board[0].date).getDate()).slice(-2) %> : <%= ('0' + new Date(board[0].date).getHours()).slice(-2) %>시 <%= ('0' + new Date(board[0].date).getMinutes()).slice(-2) %>분 <%= ('0' + new Date(board[0].date).getSeconds()).slice(-2) %>초" style="width:300px;" disabled />
+            </div>
+        <% } %>
+
+        <!-- 내용 입력 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="id">내용</label> 
+            <textarea class="form-control" name="content" style="width:800px;height: 200px;" 
+            <%= (cls === 'CEO' || !login || actionType === 'detail') ? 'disabled' : '' %>><%= actionType === 'create' ? '' : board[0].content %></textarea>
+        </div>
+
+        <!-- 비밀번호 입력 필드 (관리자가 아닐 경우에만 보임) -->
+        <% if ((actionType === 'create' || actionType === 'update') && cls !== 'MNG') { %>
+            <div class="mb-3">
+                <label class="form-label" for="id">갱신삭제시 비밀번호</label> 
+                <input class="form-control" type="text" name="password" style="width:300px;" 
+                       value="" <%= (cls === 'CEO' || !login || actionType === 'detail') ? 'disabled' : '' %> />
+            </div>
+        <% } %>
+
+        <!-- 생성/수정 버튼 (create, update에서만 출력) -->
+        <% if ((actionType === 'create' || actionType === 'update') && (cls === 'MNG' || (cls !== 'CEO' && login))) { %>
+            <button class="btn btn-outline-primary btn-sm" type="submit">
+                <%= actionType === 'create' ? '생성' : '수정' %>
+            </button>
+        <% } %>
+
+        <!-- 수정/삭제 버튼 (관리자는 작성자와 관계없이 표시) -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/board/view/<%= boards[0].type_id %>/<%= pNum %>">
+                <button type="button" class="btn btn-info me-md-2">목록</button>
+            </a>
+            <% if ((actionType === 'detail' && login && (cls === 'MNG' || names[0].name === who)) && cls !== 'CEO') { %>
+                <a href="/board/update/<%= board[0].board_id %>/<%= boards[0].type_id %>/<%= pNum %>">
+                    <button type="button" class="btn btn-info me-md-2">수정</button>
+                </a>            
+                <a href="/board/delete/<%= board[0].board_id %>/<%= boards[0].type_id %>/<%= pNum %>" 
+                   onclick="if(confirm('정말로 삭제하시겠습니까?')==false) return false"> 
+                    <button type="button" class="btn btn-info me-md-2">삭제</button>
+                </a>
+            <% } %>
+        </div>
+    </form>
+</div>

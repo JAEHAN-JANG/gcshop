@@ -1,0 +1,38 @@
+<div class="container">
+
+    <h2>cart 테이블 수정</h2>
+
+    <form action="/cartupdate_process" method="post">
+
+        <input type="hidden" name="cart_id" value="<%= selected.cart_id %>">
+        <div class="mb-3">
+            <label class="form-label" for="customer">고객</label>
+            <select name="customer" id="customer" required>
+                <% for (var i = 0; i < customers.length; i++) { %>
+                    <option value="<%= customers[i].loginid %>" <%= customers[i].loginid === selected.loginid ? 'selected' : '' %>>
+                        <%= customers[i].name %>
+                    </option>
+                <% } %>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="product">상품</label>
+            <select name="product" id="product" required>
+                <% for (var i = 0; i < products.length; i++) { %>
+                    <option value="<%= products[i].mer_id %>" <%= products[i].mer_id === selected.mer_id ? 'selected' : '' %>>
+                        <%= products[i].name %>
+                    </option>
+                <% } %>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="date">날짜</label>
+            <input class="form-control" type="text" name="date" id="date" value="<%= new Date(selected.date).getFullYear() %>.<%= ('0' + (new Date(selected.date).getMonth() + 1)).slice(-2) %>.<%= ('0' + new Date(selected.date).getDate()).slice(-2) %> : <%= ('0' + new Date(selected.date).getHours()).slice(-2) %>시 <%= ('0' + new Date(selected.date).getMinutes()).slice(-2) %>분 <%= ('0' + new Date(selected.date).getSeconds()).slice(-2) %>초" style="width: auto;" disabled/>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
+        <a href="/cartview" class="btn btn-outline-primary btn-sm">카트 목록 돌아가기</a>
+    </form>
+</div>

@@ -1,0 +1,34 @@
+<table class="table table-bordered" style="text-align: center; vertical-align: middle; border-color: #007bff;">
+    <thead class="table-primary">
+        <tr>
+            <th>loginid</th>
+            <th>고객명</th>
+            <th>상품id</th>
+            <th>상품명</th>
+            <th>일자</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (i = 0; i < cartlist.length; i++) { %>
+        <tr style="text-align: center; vertical-align: middle; border: 2px solid #007bff;">
+            <td><%= cartlist[i].loginid %></td>
+            <td><%= cartlist[i].cname %></td>
+            <td><%= cartlist[i].mer_id %></td>
+            <td><%= cartlist[i].pname %></td>
+            <td><%= new Date(cartlist[i].date).getFullYear() %>.<%= ('0' + (new Date(cartlist[i].date).getMonth() + 1)).slice(-2) %>.<%= ('0' + new Date(cartlist[i].date).getDate()).slice(-2) %> :
+                <%= ('0' + new Date(cartlist[i].date).getHours()).slice(-2) %>시 
+                <%= ('0' + new Date(cartlist[i].date).getMinutes()).slice(-2) %>분 
+                <%= ('0' + new Date(cartlist[i].date).getSeconds()).slice(-2) %>초</td>
+            <td><a href="/cartupdate/<%= cartlist[i].cart_id %>" style="text-decoration: none;">수정</a></td>
+            <td>
+                <a href="/cartdelete/<%= cartlist[i].cart_id %>" style="text-decoration: none;" onclick="if(confirm('정말로 삭제하시겠습니까?')==false) return false;">삭제</a>
+            </td>
+        </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<% if (cartlist.length == 0) { %>
+    <p style="text-align: center;">장바구니 관리 목록이 없습니다. 장바구니에 상품 추가가 필요합니다.</p>
+<% } %>

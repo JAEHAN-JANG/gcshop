@@ -1,0 +1,22 @@
+<table class="table table-bordered " style="text-align: center;">
+    <thead class="table-primary ">
+        <th>테이블 명</th>
+        <th>테이블 설명</th>
+    </thead> 
+
+    <% for(i=0; i < table.length; i++) { %> 
+    <tr>
+        <td><a href="/table/view/<%=table[i].TABLE_NAME%>"><%= table[i].TABLE_NAME %></a></td>
+        <td><%= table[i].TABLE_COMMENT %></td>
+    </tr>
+        
+    <% } %> 
+</table>
+
+    <% if( table.length == 0 ) { %> 
+
+        <p>테이블이 없으니 데이터베이스에 테이블을 추가해주십시오.</p>
+
+    <% } %>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

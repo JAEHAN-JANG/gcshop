@@ -1,0 +1,57 @@
+<h1><%- btname[0].title %></h1>
+
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <td>작성자</td>
+            <td>제목</td>
+            <td>날짜</td>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (boards.length > 0) { %>
+            <% for (var i = 0; i < boards.length; i++) { %>
+                <tr>
+                    <td><%= boards[i].name %></td>
+                    <td><a href="/board/detail/<%=boards[i].board_id%>/<%=pNum%>" style="text-decoration: none;"><%- boards[i].title %></a></td>
+                    <td><%= new Date(boards[i].date).getFullYear() %>.<%= ('0' + (new Date(boards[i].date).getMonth() + 1)).slice(-2) %>.<%= ('0' + new Date(boards[i].date).getDate()).slice(-2) %> :
+                        <%= ('0' + new Date(boards[i].date).getHours()).slice(-2) %>시 
+                        <%= ('0' + new Date(boards[i].date).getMinutes()).slice(-2) %>분 
+                        <%= ('0' + new Date(boards[i].date).getSeconds()).slice(-2) %>초</td>
+                </tr>
+            <% } %>
+        <% } else { %>
+            <tr>
+                <td colspan="3" style="text-align: center;"></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<% if(boards.length==0) { %> 
+    <p>작성된 글이 없으니 글쓰기 버튼으로 게시판 글을 추가해 주십시오.</p>
+<% } %>
+    
+
+<% if (login) { 
+    // 관리자는 항상 글쓰기 버튼 표시
+    if (cls === 'MNG' || (cls === 'CST' && btname[0].write_YN === 'Y')) { %>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/board/create/<%= btname[0].type_id %>"> 
+                <button type="button" class="btn btn-info me-md-2">글쓰기</button> 
+            </a>
+        </div>
+    <% } 
+} %>
+
+<div>
+    <% var j = 1;
+    while (j <= totalPages) { 
+        if (j == pNum) { %>
+            <span style="font-weight: bold;"><%= j %></span>&nbsp;&nbsp;
+        <% } else { %>
+            <span><a href="/board/view/<%= btname[0].type_id %>/<%= j %>"><%= j %></a></span>&nbsp;&nbsp;
+        <% } 
+        j++;
+    } %>
+</div>
